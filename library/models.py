@@ -30,10 +30,8 @@ class Book(models.Model):
 
 class Borrowing(models.Model):
     borrow_date = models.DateField()
-    expected_return_date = models.DecimalField(max_digits=5, decimal_places=2,)
-    actual_return_date = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
+    expected_return_date = models.DateField()
+    actual_return_date = models.DateField(
         null=True,
         blank=True
     )
