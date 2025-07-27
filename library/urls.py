@@ -7,7 +7,7 @@ app_name = "library"
 
 
 router = routers.DefaultRouter()
-router.register("books", BookViewSet)
-
+router.register("books", BookViewSet, basename="books")
+router.register("borrowings", BookViewSet, basename="borrowings")
 
 urlpatterns = [path("", include(router.urls))]
