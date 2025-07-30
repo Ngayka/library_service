@@ -8,27 +8,42 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('payments', '0001_initial'),
+        ("payments", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='payment',
-            name='borrowing',
+            model_name="payment",
+            name="borrowing",
         ),
         migrations.AddField(
-            model_name='payment',
-            name='type',
-            field=models.CharField(choices=[('PAYMENT', 'Payment'), ('FINE', 'Fine')], default='Pending', max_length=100),
+            model_name="payment",
+            name="type",
+            field=models.CharField(
+                choices=[("PAYMENT", "Payment"), ("FINE", "Fine")],
+                default="Pending",
+                max_length=100,
+            ),
         ),
         migrations.AlterField(
-            model_name='payment',
-            name='amount',
-            field=models.DecimalField(decimal_places=2, max_digits=5, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))]),
+            model_name="payment",
+            name="amount",
+            field=models.DecimalField(
+                decimal_places=2,
+                max_digits=5,
+                validators=[django.core.validators.MinValueValidator(Decimal("0.00"))],
+            ),
         ),
         migrations.AlterField(
-            model_name='payment',
-            name='status',
-            field=models.CharField(choices=[('Pending', 'Pending'), ('Succeeded', 'Succeeded'), ('Canceled', 'Canceled')], max_length=100),
+            model_name="payment",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("Pending", "Pending"),
+                    ("Succeeded", "Succeeded"),
+                    ("Canceled", "Canceled"),
+                ],
+                max_length=100,
+            ),
         ),
     ]

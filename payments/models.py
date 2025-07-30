@@ -7,9 +7,9 @@ from library.models import Borrowing
 
 class Payment(models.Model):
     class PaymentsStatus(models.TextChoices):
-        pending="Pending"
-        succeeded="Succeeded"
-        canceled="Canceled"
+        pending = "Pending", "PENDING"
+        succeeded = "Succeeded", "SUCCEEDED"
+        canceled = "Canceled", "CANCELED"
 
     class PaymentsType(models.TextChoices):
         PAYMENT = "PAYMENT", "Payment"
@@ -17,15 +17,23 @@ class Payment(models.Model):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     session_id = models.CharField(max_length=120, unique=True)
+    borrowing = models.ForeignKey(
+        Borrowing,
+        on_delete=models.CASCADE,
+        related_name="payments",
+        null=True,
+        blank=True,
+    )
     status = models.CharField(max_length=100, choices=PaymentsStatus.choices)
-    type = models.CharField(max_length=100, choices=PaymentsType.choices, default="Pending")
-    payments_intent = models.CharField(max_length=120, blank=True, null=True)
-    amount = models.DecimalField(max_digits=5,
-                                decimal_places=2,
-                                validators=[MinValueValidator(Decimal('0.00'))]
-                                 )
+    type = models.CharField(
+        max_length=100, choices=PaymentsType.choices, default=PaymentsStatus.pending
+    )
+    payment_intent = models.CharField(max_length=120, blank=True, null=True)
+    amount = models.DecimalField(
+        max_digits=5, decimal_places=2, validators=[MinValueValidator(Decimal("0.00"))]
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return f"Payment {self.id} - {self.status}: {self.amount}"
-

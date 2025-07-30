@@ -8,14 +8,18 @@ from rest_framework.response import Response
 
 
 from library.models import Book, Borrowing
-from library.serializers import BookListSerializer, BookDetailSerializer, BorrowingSerializer
+from library.serializers import (
+    BookListSerializer,
+    BookDetailSerializer,
+    BorrowingSerializer,
+)
 
 
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
 
     def get_serializer_class(self):
-        if self.action == 'list':
+        if self.action == "list":
             return BookListSerializer
         return BookDetailSerializer
 
@@ -34,8 +38,8 @@ class BorrowingViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Borrowing.objects.all()
-        is_active = self.request.query_params.get('is_active')
-        user_id = self.request.query_params.get('customer_id')
+        is_active = self.request.query_params.get("is_active")
+        user_id = self.request.query_params.get("customer_id")
 
         if user_id:
             queryset = queryset.filter(customer_id=user_id)
@@ -56,9 +60,7 @@ class BorrowingViewSet(viewsets.ModelViewSet):
         if borrowing.actual_return_date is not None:
             return Response({"detail": "Book is already returned"}, status=400)
         serializer = self.get_serializer(
-            borrowing,
-            data={"actual_return_date": timezone.now().date()},
-            partial=True
+            borrowing, data={"actual_return_date": timezone.now().date()}, partial=True
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()

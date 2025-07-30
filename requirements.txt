@@ -3,6 +3,7 @@ anyio==4.9.0
 asgiref==3.8.1
 attrs==25.3.0
 billiard==4.2.1
+black==25.1.0
 celery==5.5.3
 certifi==2025.7.14
 charset-normalizer==3.4.2
@@ -32,9 +33,12 @@ jsonschema==4.24.0
 jsonschema-specifications==2025.4.1
 kombu==5.5.4
 mccabe==0.7.0
+mypy_extensions==1.1.0
 packaging==24.2
+pathspec==0.12.1
 pep8-naming==0.15.1
 pillow==11.2.1
+platformdirs==4.3.8
 pluggy==1.5.0
 prompt_toolkit==3.0.51
 pycodestyle==2.12.1
