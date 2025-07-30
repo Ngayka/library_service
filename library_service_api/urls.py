@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/customer/", include("customer.urls", namespace="customer")),
     path("api/library/", include("library.urls", namespace="library")),
-    path("telegram/", include("telegram_bot.urls")),
+    path("api/telegram/", include("telegram_bot.urls")),
+    path('api/payments/', include('payments.urls')),
 ]

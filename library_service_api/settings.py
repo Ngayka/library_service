@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,6 +27,9 @@ SECRET_KEY = 'django-insecure-wn83=8k8t2oy67!f9&@m8a7vrd=i(&r%a164!sho78j9dd%qnw
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+TRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
 ALLOWED_HOSTS = []
 
@@ -41,7 +47,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     "library",
     "customer",
-    "telegram_bot"
+    "telegram_bot",
+    "payments",
 ]
 
 MIDDLEWARE = [
@@ -61,7 +68,7 @@ AUTH_USER_MODEL = 'customer.User'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
