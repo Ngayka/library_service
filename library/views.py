@@ -1,4 +1,5 @@
-from datetime import timezone
+from datetime import datetime
+from django.utils import timezone
 
 from django.shortcuts import render
 from rest_framework import viewsets, permissions
@@ -26,26 +27,29 @@ class BookViewSet(viewsets.ModelViewSet):
 
 
 class BorrowingViewSet(viewsets.ModelViewSet):
-    queryset = Borrowing.objects.select_related("user", "book").all()
+    queryset = Borrowing.objects.select_related("customer", "book").all()
     serializer_class = BorrowingSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         queryset = Borrowing.objects.all()
         is_active = self.request.query_params.get('is_active')
-        user_id = self.request.query_params.get('user_id')
+        user_id = self.request.query_params.get('customer_id')
 
         if user_id:
-            queryset = queryset.filter(user_id=user_id)
+            queryset = queryset.filter(customer_id=user_id)
 
-        if is_active.lower() == "true":
-            queryset = queryset.objects.filter(actual_return_date__isnull=True)
-        elif is_active.lower() == "false":
-            queryset = queryset.objects.filter(actual_return_date__isnull=False)
+        if is_active == "True":
+            queryset = queryset.filter(actual_return_date__isnull=True)
+        elif is_active == "False":
+            queryset = queryset.filter(actual_return_date__isnull=False)
 
         return queryset
 
-    @action(detail=True, method=["post"])
+    def perform_create(self, serializer):
+        serializer.save()
+
+    @action(detail=True, methods=["post"], url_path="return")
     def return_book(self, request, pk=None):
         borrowing = self.get_object()
         if borrowing.actual_return_date is not None:

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser, UserManager as DjangoUserManager
 from django.db import models
 from django.utils.translation import gettext as _
+import uuid
 
 
 class UserManager(DjangoUserManager):
@@ -49,5 +50,13 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = UserManager()
+    telegram_chat_id = models.CharField(max_length=50, null=True, blank=True)
+    telegram_token = models.CharField(max_length=64, unique=True, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.telegram_token:
+            self.telegram_token = uuid.uuid4().hex
+        super().save(*args, **kwargs)
+
 
     pass
