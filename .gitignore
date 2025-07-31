@@ -43,7 +43,7 @@ share/python-wheels/
 *.egg
 MANIFEST
 documents
-.idea
+.idea/
 library_service_api.iml
 
 # PyInstaller
