@@ -1,6 +1,9 @@
 # Library Service API
 
 A RESTful API for managing a library system built with Django REST Framework, PostgreSQL, Celery, and Docker.
+### Name oh chat_bot
+
+kyiv_library_bot
 
 ## 🚀 Getting Started
 

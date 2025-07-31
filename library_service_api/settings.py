@@ -94,7 +94,7 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ],
 }
-
+#
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 # DATABASES = {
