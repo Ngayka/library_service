@@ -43,8 +43,7 @@ share/python-wheels/
 *.egg
 MANIFEST
 documents
-.idea/
-library_service_api.iml
+.idea
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

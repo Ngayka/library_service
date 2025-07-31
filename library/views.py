@@ -1,12 +1,9 @@
-from datetime import datetime
 from django.utils import timezone
-from django.conf import settings
-from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-
+from telegram_bot.utils import send_telegram_message
 from library.models import Book, Borrowing
 from library.serializers import (
     BookListSerializer,
@@ -30,6 +27,9 @@ class BookViewSet(viewsets.ModelViewSet):
             return [permissions.IsAuthenticated()]
         return [permissions.AllowAny()]
 
+    def perform_create(self, serializer):
+        book = serializer.save()
+        send_telegram_message(f"Add new book {book.title}, author: {book.author}")
 
 class BorrowingViewSet(viewsets.ModelViewSet):
     queryset = Borrowing.objects.select_related("customer", "book").all()
@@ -52,7 +52,9 @@ class BorrowingViewSet(viewsets.ModelViewSet):
         return queryset
 
     def perform_create(self, serializer):
-        serializer.save()
+        borrowing = serializer.save()
+        send_telegram_message(f"Add new borrowing at {borrowing.borrowing_date} for book {borrowing.book.title}")
+
 
     @action(detail=True, methods=["post"], url_path="return")
     def return_book(self, request, pk=None):
