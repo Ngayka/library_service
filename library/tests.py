@@ -40,7 +40,8 @@ class BorrowingTest(TestCase):
             customer=self.user,
             book=self.book,
             borrow_date=date(2025, 7, 1),
-            expected_return_date=date(2025, 7, 10)
+            expected_return_date=date(2025, 7, 10,),
+            notified=False
         )
 
         self.assertEqual(borrowing.customer, self.user)

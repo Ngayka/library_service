@@ -21,5 +21,4 @@ def send_telegram_message(message: str) -> None:
         response = requests.post(url, json=payload)
         response.raise_for_status()
     except requests.RequestException as e:
-        # лог або попередження
         print(f"Telegram error: {e}")
