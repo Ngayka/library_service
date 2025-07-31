@@ -1,7 +1,9 @@
 from celery import shared_task
 from .utils import send_telegram_notification
+
 from datetime import datetime, timedelta
-from django.utils.timezone import make_aware
+from django.utils.timezone import now
+from library.models import Borrowing
 
 
 @shared_task
@@ -11,7 +13,7 @@ def notify_borrowings_deadlines():
         expected_return_date=deadline, actual_return_date__isnull=True, is_active=True
     )
     for borrowing in borrowings:
-        message = f"🔔 Reminder: Deadline for task '{task.title}' is {task.deadline.strftime('%Y‑%m‑%d %H:%M')}"
-        send_telegram_notification(task.user.telegram_chat_id, message)
-        task.notified = True
-        task.save()
+        message = f"🔔 Reminder: Deadline for book '{borrowing.book.title}' is {borrowing.expected_return_date.strftime('%Y‑%m‑%d %H:%M')}"
+        send_telegram_notification(borrowing.user.telegram_chat_id, message)
+        borrowing.is_active = True
+        borrowing.save()
