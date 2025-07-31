@@ -13,22 +13,22 @@ kyiv_library_bot
 - (Optional) Make sure ports 8000, 5432, and 6379 are free
 
 ### ⚙️ Project Structure
-
+```
 library_service_api/
 │
-├── library_service_api/ # Django project settings
-├── telegram_bot/ # Telegram bot app
-├── Dockerfile # Docker config for Django
-├── docker-compose.yaml # Services: Django, Postgres, Redis, Celery
+├── library_service_api/    # Django project settings
+├── telegram_bot/           # Telegram bot app
+├── Dockerfile              # Docker config for Django
+├── docker-compose.yaml     # Services: Django, Postgres, Redis, Celery
 ├── requirements.txt
-└── .env.sample # Environment variables
-
+└── .env.sample             # Environment variables
+```
 ### ⚒️ Setup & Run
 
 1. Clone the repository
 
 ```bash
-  git clone https://github.com/your-username/library_service_api.git
+  git clone https://github.com/ngayka/library_service_api.git
   cd library_service_api
 ```
 2. Create .env file
